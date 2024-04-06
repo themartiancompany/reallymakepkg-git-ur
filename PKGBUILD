@@ -4,11 +4,13 @@
 # Maintainer: Pellegrino Prevete <pellegrinoprevete@gmail.com>
 # Contributor: Marcell Meszaros (MarsSeed) <marcell.meszaros@runbox.eu>
 
+_git="false"
+_offline="false"
 _py="python"
 _py2="${_py}2"
 _pkgname=reallymakepkg
 pkgname="${_pkgname}-git"
-pkgver=1.2.1.r2.ga6f8595
+pkgver=1.2.1.r10.g18a8771
 pkgrel=1
 pkgdesc="System-independent makepkg"
 arch=(
@@ -25,7 +27,6 @@ depends=(
   fakeroot
 )
 makedepends=(
-  git
 )
 optdepends=(
   "${_py}-pygments: colorized output and syntax highlighting"
@@ -37,10 +38,26 @@ provides=(
 conflicts=(
   "${_pkgname}"
 )
-_url="file://${HOME}/${_pkgname}"
-source=(
-  "git+${url}"
-)
+_url="${url}"
+[[ "${_offline}" == true ]] && \
+  _url="${_local}"
+source=()
+_branch="master"
+[[ "${_git}" == true ]] && \
+  makedepends+=(
+    git
+  ) && \
+  source+=(
+    "${_pkgname}-${_branch}::git+${_url}#branch=${_branch}"
+  )
+[[ "${_git}" == false ]] && \
+  makedepends+=(
+    curl
+    jq
+  ) && \
+  source+=(
+    "${_pkgname}.tar.gz::${_url}/archive/refs/heads/${_branch}.tar.gz"
+  )
 sha256sums=(
   SKIP
 )
@@ -125,7 +142,8 @@ package() {
     make \
       DESTDIR="${pkgdir}" \
       PREFIX="${_usr}" \
-      install
+      install || \
+  true
 }
 
 # vim: ft=sh syn=sh et
