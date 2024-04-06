@@ -1,18 +1,19 @@
 pkgbase = reallymakepkg-git
 	pkgdesc = System-independent makepkg
-	pkgver = 1.2.1.r2.ga6f8595
+	pkgver = 1.2.1.r10.g18a8771
 	pkgrel = 1
 	url = https://github.com/themartiancompany/reallymakepkg
 	arch = any
 	license = AGPL3
-	makedepends = git
+	makedepends = curl
+	makedepends = jq
 	depends = pacman
 	depends = fakeroot
 	optdepends = python-pygments: colorized output and syntax highlighting
 	optdepends = python2-pygments: colorized output and syntax highlighting
-	provides = reallymakepkg=1.2.1.r2.ga6f8595
+	provides = reallymakepkg=1.2.1.r10.g18a8771
 	conflicts = reallymakepkg
-	source = git+https://github.com/themartiancompany/reallymakepkg
+	source = reallymakepkg.tar.gz::https://github.com/themartiancompany/reallymakepkg/archive/refs/heads/master.tar.gz
 	sha256sums = SKIP
 
 pkgname = reallymakepkg-git
