@@ -4,7 +4,7 @@
 # Maintainer: Pellegrino Prevete <pellegrinoprevete@gmail.com>
 # Contributor: Marcell Meszaros (MarsSeed) <marcell.meszaros@runbox.eu>
 
-_git="false"
+_git="true"
 _offline="false"
 _py="python"
 _py2="${_py}2"
@@ -42,7 +42,7 @@ _url="${url}"
 [[ "${_offline}" == true ]] && \
   _url="${_local}"
 source=()
-_branch="master"
+_branch="main"
 [[ "${_git}" == true ]] && \
   makedepends+=(
     git
@@ -56,7 +56,7 @@ _branch="master"
     jq
   ) && \
   source+=(
-    "${_pkgname}.tar.gz::${_url}/archive/refs/heads/${_branch}.tar.gz"
+    "${_pkgname}-${_branch}.tar.gz::${_url}/archive/refs/heads/${_branch}.tar.gz"
   )
 sha256sums=(
   SKIP
@@ -71,6 +71,42 @@ _nth() {
     awk \
       -F '+' \
       '{print $'"${_n}"'}'
+}
+
+_jq_pkgver() {
+  local \
+    _version \
+    _rev \
+    _commit
+  _version="$( \
+    curl \
+      --silent \
+      "${_gh_api}/tags" | \
+      jq \
+        '.[0].name')"
+  _version_commit="$( \
+    curl \
+      --silent \
+      "${_gh_api}/tags" | \
+      jq \
+        '.[0].commit.sha')"
+  _rev="$( \
+    curl \
+      --silent \
+      "${_gh_api}/commits" | \
+      jq \
+        'map(.sha == '${_version_commit}' ) | index(true)')"
+  _commit="$( \
+    curl \
+      --silent \
+      "${_gh_api}/commits" | \
+      jq \
+        '.[0].sha')"
+  printf \
+    "%s.r%s.g%s" \
+    "${_version}" \
+    "${_rev}" \
+    "${_commit}"
 }
 
 _parse_ver() {
@@ -101,11 +137,9 @@ _parse_ver() {
     "${_out}"
 }
 
-pkgver() {
+_git_pkgver() {
   local \
     _pkgver
-  cd \
-    "${_pkgname}"
   _pkgver="$( \
     git \
       describe \
@@ -115,6 +149,16 @@ pkgver() {
         's/-/+/g')"
   _parse_ver \
     "${_pkgver}"
+}
+
+pkgver() {
+  cd \
+    "${_pkgname}-${_branch}"
+  if [[ "${_git}" == true ]]; then
+    _git_pkgver
+  elif [[ "${_git}" == false ]]; then
+    _jq_pkgver
+  fi
 }
 
 _os="$( \
