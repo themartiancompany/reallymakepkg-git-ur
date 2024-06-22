@@ -5,15 +5,24 @@ pkgbase = reallymakepkg-git
 	url = https://github.com/themartiancompany/reallymakepkg
 	arch = any
 	license = AGPL3
-	makedepends = curl
-	makedepends = jq
+	makedepends = git
 	depends = pacman
 	depends = fakeroot
+	depends = libandroid-glob
+	depends = libandroid-nl-types
+	depends = libandroid-posix-semaphore
+	depends = libandroid-shmem
+	depends = libandroid-spawn
+	depends = libandroid-stub
+	depends = libandroid-support
+	depends = libandroid-sysv-semaphore
+	depends = libandroid-utimes
+	depends = libandroid-wordexp
 	optdepends = python-pygments: colorized output and syntax highlighting
 	optdepends = python2-pygments: colorized output and syntax highlighting
 	provides = reallymakepkg=1.2.1.r10.g18a8771
 	conflicts = reallymakepkg
-	source = reallymakepkg.tar.gz::https://github.com/themartiancompany/reallymakepkg/archive/refs/heads/master.tar.gz
+	source = reallymakepkg-main::git+https://github.com/themartiancompany/reallymakepkg#branch=main
 	sha256sums = SKIP
 
 pkgname = reallymakepkg-git

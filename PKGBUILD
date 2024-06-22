@@ -8,6 +8,9 @@ _git="true"
 _offline="false"
 _py="python"
 _py2="${_py}2"
+_os="$( \
+  uname \
+    -o)"
 _pkgname=reallymakepkg
 pkgname="${_pkgname}-git"
 pkgver=1.2.1.r10.g18a8771
@@ -26,6 +29,19 @@ depends=(
   pacman
   fakeroot
 )
+[[ "${_os}" == 'Android' ]] && \
+  depends+=(
+    libandroid-glob
+    libandroid-nl-types
+    libandroid-posix-semaphore
+    libandroid-shmem
+    libandroid-spawn
+    libandroid-stub
+    libandroid-support
+    libandroid-sysv-semaphore
+    libandroid-utimes
+    libandroid-wordexp
+  )
 makedepends=(
 )
 optdepends=(
