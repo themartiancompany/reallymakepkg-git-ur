@@ -8,6 +8,7 @@ pkgbase = reallymakepkg-git
 	makedepends = git
 	depends = pacman
 	depends = fakeroot
+	depends = libandroid-complex-math
 	depends = libandroid-glob
 	depends = libandroid-nl-types
 	depends = libandroid-posix-semaphore

@@ -31,6 +31,7 @@ depends=(
 )
 [[ "${_os}" == 'Android' ]] && \
   depends+=(
+    libandroid-complex-math
     libandroid-glob
     libandroid-nl-types
     libandroid-posix-semaphore
