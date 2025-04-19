@@ -4,8 +4,16 @@
 # Maintainer: Pellegrino Prevete <pellegrinoprevete@gmail.com>
 # Contributor: Marcell Meszaros (MarsSeed) <marcell.meszaros@runbox.eu>
 
-_git="true"
-_offline="false"
+if [[ ! -v "_offline" ]]; then
+  _offline="false"
+fi
+if [[ ! -v "_git" ]]; then
+  if [[ "${_offline}" == "true" ]]; then
+    _git="true"
+  fi
+else
+  _git="false"
+fi
 _py="python"
 _py2="${_py}2"
 _os="$( \
@@ -13,7 +21,7 @@ _os="$( \
     -o)"
 _pkgname=reallymakepkg
 pkgname="${_pkgname}-git"
-pkgver=1.2.1.r10.g18a8771
+pkgver=1.2.2.r3.g7738cf4
 pkgrel=1
 pkgdesc="System-independent makepkg"
 arch=(
@@ -26,24 +34,29 @@ license=(
   AGPL3
 )
 depends=(
-  pacman
-  fakeroot
+  'binutils'
+  'bash'
+  'fakeroot'
+  'libcrash-bash'
+  'pacman'
 )
-[[ "${_os}" == 'Android' ]] && \
+if [[ "${_os}" == 'Android' ]]; then
   depends+=(
-    libandroid-complex-math
-    libandroid-glob
-    libandroid-nl-types
-    libandroid-posix-semaphore
-    libandroid-shmem
-    libandroid-spawn
-    libandroid-stub
-    libandroid-support
-    libandroid-sysv-semaphore
-    libandroid-utimes
-    libandroid-wordexp
+    'libandroid-complex-math'
+    'libandroid-glob'
+    'libandroid-nl-types'
+    'libandroid-posix-semaphore'
+    'libandroid-shmem'
+    'libandroid-spawn'
+    'libandroid-stub'
+    'libandroid-support'
+    'libandroid-sysv-semaphore'
+    'libandroid-utimes'
+    'libandroid-wordexp'
   )
+fi
 makedepends=(
+  'make'
 )
 optdepends=(
   "${_py}-pygments: colorized output and syntax highlighting"
@@ -67,16 +80,17 @@ _branch="main"
   source+=(
     "${_pkgname}-${_branch}::git+${_url}#branch=${_branch}"
   )
-[[ "${_git}" == false ]] && \
+if [[ "${_git}" == false ]]; then
   makedepends+=(
-    curl
-    jq
-  ) && \
+    'curl'
+    'jq'
+  )
   source+=(
     "${_pkgname}-${_branch}.tar.gz::${_url}/archive/refs/heads/${_branch}.tar.gz"
   )
+fi
 sha256sums=(
-  SKIP
+  'SKIP'
 )
 
 _nth() {
