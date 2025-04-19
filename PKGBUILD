@@ -44,7 +44,7 @@ _os="$( \
     -o)"
 _pkgname=reallymakepkg
 pkgname="${_pkgname}-git"
-pkgver=1.2.2.r3.g7738cf4
+pkgver=.r.g
 pkgrel=1
 pkgdesc="System-independent makepkg"
 arch=(
@@ -149,7 +149,7 @@ _jq_pkgver() {
       --silent \
       "${_gh_api}/commits" | \
       jq \
-        'map(.sha == '${_version_commit}' ) | index(true)')"
+        'map(.sha == "'${_version_commit}'" ) | index(true)')"
   _commit="$( \
     curl \
       --silent \
@@ -231,7 +231,7 @@ _usr="$( \
 
 package() {
   cd \
-    "${_pkgname}"
+    "${_pkgname}-${_branch}"
   [[ "${_os}" != "GNU/Linux" ]] && \
     make \
       DESTDIR="${pkgdir}" \
