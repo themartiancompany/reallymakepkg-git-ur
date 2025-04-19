@@ -42,17 +42,19 @@ _py2="${_py}2"
 _os="$( \
   uname \
     -o)"
-_pkgname=reallymakepkg
-pkgname="${_pkgname}-git"
+_pkg=reallymakepkg
+pkgname="${_pkg}-git"
 pkgver=.r.g
 pkgrel=1
 pkgdesc="System-independent makepkg"
 arch=(
   'any'
 )
-_repo="https://github.com"
+_gh="github.com"
+_http="https://${_gh}"
 _ns="themartiancompany"
-url="${_repo}/${_ns}/${_pkgname}"
+url="${_http}/${_ns}/${_pkg}"
+_gh_api="https://api.${_gh}/repos/${_ns}/${_pkg}"
 license=(
   'AGPL3'
 )
@@ -86,10 +88,10 @@ optdepends=(
   "${_py2}-pygments: colorized output and syntax highlighting"
 )
 provides=(
-  "${_pkgname}=${pkgver}"
+  "${_pkg}=${pkgver}"
 )
 conflicts=(
-  "${_pkgname}"
+  "${_pkg}"
 )
 _url="${url}"
 [[ "${_offline}" == true ]] && \
@@ -101,7 +103,7 @@ if [[ "${_git}" == "true" ]]; then
     'git'
   ) 
   source+=(
-    "${_pkgname}-${_branch}::git+${_url}#branch=${_branch}"
+    "${_pkg}-${_branch}::git+${_url}#branch=${_branch}"
   )
 elif [[ "${_git}" == "false" ]]; then
   makedepends+=(
@@ -109,7 +111,7 @@ elif [[ "${_git}" == "false" ]]; then
     'jq'
   )
   source+=(
-    "${_pkgname}-${_branch}.tar.gz::${_url}/archive/refs/heads/${_branch}.tar.gz"
+    "${_pkg}-${_branch}.tar.gz::${_url}/archive/refs/heads/${_branch}.tar.gz"
   )
 fi
 sha256sums=(
@@ -149,7 +151,7 @@ _jq_pkgver() {
       --silent \
       "${_gh_api}/commits" | \
       jq \
-        'map(.sha == "'${_version_commit}'" ) | index(true)')"
+        'map(.sha == '${_version_commit}' ) | index(true)')"
   _commit="$( \
     curl \
       --silent \
@@ -207,7 +209,7 @@ _git_pkgver() {
 
 pkgver() {
   cd \
-    "${_pkgname}-${_branch}"
+    "${_pkg}-${_branch}"
   if [[ "${_git}" == true ]]; then
     _git_pkgver
   elif [[ "${_git}" == false ]]; then
@@ -231,7 +233,7 @@ _usr="$( \
 
 package() {
   cd \
-    "${_pkgname}-${_branch}"
+    "${_pkg}-${_branch}"
   [[ "${_os}" != "GNU/Linux" ]] && \
     make \
       DESTDIR="${pkgdir}" \
