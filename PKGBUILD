@@ -1,15 +1,38 @@
 # SPDX-License-Identifier: AGPL-3.0
+
+#    ----------------------------------------------------------------------
+#    Copyright © 2023, 2024, 2025  Pellegrino Prevete
 #
+#    All rights reserved
+#    ----------------------------------------------------------------------
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 # Maintainer: Truocolo <truocolo@aol.com>
-# Maintainer: Pellegrino Prevete <pellegrinoprevete@gmail.com>
-# Contributor: Marcell Meszaros (MarsSeed) <marcell.meszaros@runbox.eu>
+# Maintainer: Truocolo <truocolo@0x6E5163fC4BFc1511Dbe06bB605cc14a3e462332b>
+# Maintainer: Pellegrino Prevete (tallero) <pellegrinoprevete@gmail.com>
+# Maintainer: Pellegrino Prevete (dvorak) <dvorak@0x87003Bd6C074C713783df04f36517451fF34CBEf>
 
 if [[ ! -v "_offline" ]]; then
   _offline="false"
 fi
-if [[ ! -v "_git" ]]; then
+if [[ ! -v "_git" || \
+      "${_git}" == "" ]]; then
   if [[ "${_offline}" == "true" ]]; then
     _git="true"
+  elif [[ "${_offline}" == "false" ]]; then
+    _git="false"
   fi
 else
   _git="false"
@@ -25,13 +48,13 @@ pkgver=1.2.2.r3.g7738cf4
 pkgrel=1
 pkgdesc="System-independent makepkg"
 arch=(
-  any
+  'any'
 )
 _repo="https://github.com"
 _ns="themartiancompany"
 url="${_repo}/${_ns}/${_pkgname}"
 license=(
-  AGPL3
+  'AGPL3'
 )
 depends=(
   'binutils'
@@ -73,14 +96,14 @@ _url="${url}"
   _url="${_local}"
 source=()
 _branch="main"
-[[ "${_git}" == true ]] && \
+if [[ "${_git}" == "true" ]]; then
   makedepends+=(
-    git
-  ) && \
+    'git'
+  ) 
   source+=(
     "${_pkgname}-${_branch}::git+${_url}#branch=${_branch}"
   )
-if [[ "${_git}" == false ]]; then
+elif [[ "${_git}" == "false" ]]; then
   makedepends+=(
     'curl'
     'jq'
