@@ -1214,6 +1214,25 @@ jobs:
   msys2-ucrt64:
     name:
       Life and DogeOS Windows base packages (CI).
+    strategy:
+      matrix:
+        include:
+          - sys:
+              mingw64
+            env:
+              x86_64
+          - sys:
+              mingw32
+            env:
+              i686
+          - sys:
+              ucrt64
+            env:
+              ucrt-x86_64
+          - sys:
+              clang64
+            env:
+              clang-x86_64
     runs-on:
       windows-latest
     defaults:
@@ -1235,12 +1254,12 @@ jobs:
           msys2/setup-msys2@v2
         with:
           msystem:
-            UCRT64
+            $${{ matrix.sys }}
           update:
             true
           install:
             git
-            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-${{ matrix.env }}-x86_64-gcc
       - name:
           Upgrade Arch environment.
         run: |
@@ -1269,32 +1288,6 @@ jobs:
       - name:
           Installs Rust.
         run: |
-          # env 
-          #   _arch="$( \
-          #     uname \
-          #       -m)" \
-          #   export \
-          #     _arch="$( \
-          #       uname \
-          #         -m)" && \
-          #   /entrypoint.sh \
-          #     echo \
-          #       "Architecture: ${_arch}" && \
-          #     if [[ "$(uname -m)" == "armv7l" || \
-          #           "$(uname -m)" == "armv8l" ]]; then \
-          #       _rust="rust-std-armv7-linux-androideabi" \
-          #     fi \
-          #     if [[ "${RUNNER_ARCH}" == "X64" ]]; then \
-          #       _rust="rust" && \
-          #       export \
-          #         _rust="${_rust}" \
-          #     fi \
-          #     if [[ "$(uname -m)" == "i686" || \
-          #           "$(uname -m)" == "aarch64" ]]; then \
-          #       _rust="rust" && \
-          #       export \
-          #         _rust="${_rust}" \
-          #     fi && \
           pacman \
             -Ss \
             --noconfirm \
