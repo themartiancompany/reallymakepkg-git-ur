@@ -1363,7 +1363,7 @@ jobs:
           asset_path:
             reallymakepkg-git-1.2.4-1-${{ matrix.architecture }}.pkg.tar.xz
           asset_name:
-            dogeos-windows-reallymakepkg-git-1.2.4-1-${{ matrix.architecture }}.pkg.tar.xz
+            dogeos-windows-reallymakepkg-git-1.2.4-1-${{ matrix.env }}.pkg.tar.xz
           asset_content_type:
             application/gzip
 
