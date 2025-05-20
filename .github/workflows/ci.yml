@@ -1241,36 +1241,6 @@ jobs:
                 clang-x86_64,
               arch:
                 x86_64 }
-          # - sys:
-          #     mingw64
-          #   env:
-          #     x86_64
-          #   msys:
-          #     MSYS
-          # - sys:
-          #     mingw64
-          #   env:
-          #     x86_64
-          #   msys:
-          #     MINGW64
-          # - sys:
-          #     mingw32
-          #   env:
-          #     i686
-          #   msys:
-          #     MINGW32
-          # - sys:
-          #     ucrt64
-          #   env:
-          #     ucrt-x86_64
-          #   msys:
-          #     UCRT64
-          # - sys:
-          #     clang64
-          #   env:
-          #     clang-x86_64
-          #   msys:
-          #     CLANG64
     runs-on:
       windows-latest
     defaults:
@@ -1287,7 +1257,7 @@ jobs:
             true
           install:
             git
-            mingw-w64-${{ matrix.env }}-${{]}x86_64-gcc
+            mingw-w64-${{ matrix.env }}-${{ matrix.arch ]}x86_64-gcc
       - name:
           Upgrade Arch environment.
         run: |
