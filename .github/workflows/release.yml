@@ -705,7 +705,7 @@ jobs:
             dogeos-android-sequoia-sq-1.3.1-1-${{ matrix.architecture }}.pkg.tar.xz
           asset_content_type:
             application/gzip
-  arch:
+  arch_release:
     name:
       Life and DogeOS GNU Base (Arch Linux) binary packages.
     strategy:
@@ -1248,6 +1248,124 @@ jobs:
       #       sequoia-sq-1.3.1-1-${{ matrix.architecture }}.pkg.tar.xz
       # - uses:
       #     actions/checkout@v4.2.2
+  msys2_release:
+    name:
+      Life and DogeOS Windows base packages (CI).
+    strategy:
+      matrix:
+        include:
+          - { sys:
+                mingw64,
+              env:
+                x86_64,
+              arch:
+                x86_64 }
+          - { sys:
+                mingw32,
+              env:
+                i686,
+              arch:
+                i686 }
+          - { sys:
+                ucrt64,
+              env:
+                ucrt-x86_64,
+              arch:
+                x86_64 }
+          - { sys:
+                clang64,
+              env:
+                clang-x86_64,
+              arch:
+                x86_64 }
+    runs-on:
+      windows-latest
+    defaults:
+      run:
+        shell:
+          msys2 {0}
+    steps:
+      - uses:
+          msys2/setup-msys2@v2
+        with:
+          msystem:
+            ${{ matrix.sys }}
+          update:
+            true
+          install:
+            base-devel
+            dos2unix
+            git
+            mingw-w64-${{ matrix.env }}-jq
+            mingw-w64-${{ matrix.env }}-gcc
+            python-docutils
+      - name:
+          Upgrade Arch environment.
+        run: |
+          pacman \
+            -Syu \
+            --noconfirm
+      # - name:
+      #     Setups an user. This is something which exists on the Ur for a reason.
+      # run: |
+      #   mkdir \
+      #     -p \
+      #     "/home/user/lur"
+      #   useradd \
+      #     user
+      #   chmod \
+      #     700 \
+      #     "/home/user"
+      #   chown \
+      #     -R \
+      #     "user:user" \
+      #     "/home/user"
+      #   chown \
+      #     -R \
+      #     "user:user" \
+      #     "$(pwd)"
+      - name:
+          Installs Rust.
+        run: |
+          pacman \
+            -Ss \
+            --noconfirm \
+            cargo
+      - name:
+          Fixes CRLF on Windows.
+        run: |
+          git \
+            config \
+              --global \
+                "core.autocrlf" \
+                "false"
+      - uses:
+          actions/checkout@v3
+      - name:
+          Builds the package.
+        run: |
+          dos2unix \
+            "PKGBUILD"
+          makepkg \
+            -df \
+            --nocheck
+      - name:
+          Upload Windows package.
+        uses:
+          actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN:
+            ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url:
+            ${{ github.event.release.upload_url }}
+            # ${{ steps.create_release.outputs.upload_url }}
+          asset_path:
+            reallymakepkg-git-1.2.4-1-${{ matrix.architecture }}.pkg.tar.xz
+          asset_name:
+            dogeos-windows-reallymakepkg-git-1.2.4-1-${{ matrix.architecture }}.pkg.tar.xz
+          asset_content_type:
+            application/gzip
 
   # This is the ideal way termux-docker would work with GHA.
   broken-ideal:
