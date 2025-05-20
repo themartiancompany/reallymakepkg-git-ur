@@ -1191,7 +1191,7 @@ jobs:
         run: |
           su \
             -c \
-              "cd '$(pwd)' && reallymakepkg -v -w '/home/user/sequoia-sq-build' -- -df --nocheck" - \
+              "cd '$(pwd)' && makepkg -v -w '/home/user/sequoia-sq-build' -- -df --nocheck" - \
             "user"
       - name:
           Installs the package.
@@ -1296,12 +1296,15 @@ jobs:
       - name:
           Builds the package.
         run: |
-          reallymakepkg \
-            -v \
-            -w \
-              '/home/user/sequoia-sq-build' -- \
+          makepkg \
             -df \
             --nocheck
+          # reallymakepkg \
+          #   -v \
+          #   -w \
+          #     '/home/user/sequoia-sq-build' -- \
+          #   -df \
+          #   --nocheck
           # su \
           #   -c \
           #     "cd '$(pwd)' && reallymakepkg -v -w '/home/user/sequoia-sq-build' -- -df --nocheck" - \
