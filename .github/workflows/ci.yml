@@ -1252,12 +1252,12 @@ jobs:
           msys2/setup-msys2@v2
         with:
           msystem:
-            $${{ matrix.sys }}
+            ${{ matrix.sys }}
           update:
             true
           install:
             git
-            mingw-w64-${{ matrix.env }}-${{ matrix.arch ]}x86_64-gcc
+            mingw-w64-${{ matrix.env }}-${{ matrix.arch ]}-gcc
       - name:
           Upgrade Arch environment.
         run: |
