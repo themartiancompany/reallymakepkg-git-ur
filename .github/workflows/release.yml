@@ -1176,6 +1176,9 @@ jobs:
           Installs the package.
         run: |
           pacman \
+            -Rdd \
+            reallymakepkg
+          pacman \
             -Udd \
             --noconfirm \
             $(find \
@@ -1313,6 +1316,9 @@ jobs:
       - name:
           Installs the package.
         run: |
+          pacman \
+            -Rdd \
+            reallymakepkg
           pacman \
             -Udd \
             --noconfirm \
