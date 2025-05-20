@@ -1252,7 +1252,7 @@ jobs:
           msys2/setup-msys2@v2
         with:
           msystem:
-            $${{ matrix.msys }}
+            $${{ matrix.sys }}
           update:
             true
           install:
