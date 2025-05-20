@@ -1325,7 +1325,8 @@ jobs:
           pacman \
             -Rdd \
             --noconfirm \
-            reallymakepkg
+            reallymakepkg || \
+            true
           pacman \
             -Udd \
             --noconfirm \
