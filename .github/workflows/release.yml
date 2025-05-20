@@ -1331,13 +1331,18 @@ jobs:
       - uses:
           actions/checkout@v3
       - name:
-          Builds the package.
+          Builds the Windows package.
         run: |
           dos2unix \
             "PKGBUILD"
+          PKGEXT='.pkg.tar.xz' \
           makepkg \
             -df \
             --nocheck
+          find \
+            "$(pwd)" \
+            -iname \
+              "*.pkg.tar.*"
       - name:
           Installs the package.
         run: |
