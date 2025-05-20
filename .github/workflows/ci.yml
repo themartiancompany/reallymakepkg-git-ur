@@ -1257,7 +1257,7 @@ jobs:
             true
           install:
             git
-            mingw-w64-${{ matrix.env }}-${{ matrix.arch ]}-gcc
+            mingw-w64-${{ matrix.env }}-${{ matrix.arch }}-gcc
       - name:
           Upgrade Arch environment.
         run: |
