@@ -1187,7 +1187,7 @@ jobs:
         run: |
           su \
             -c \
-              "cd '$(pwd)' && makepkg -v -w '/home/user/sequoia-sq-build' -- -df --nocheck" - \
+              "cd '$(pwd)' && makepkg -df --nocheck" - \
             "user"
       - name:
           Installs the package.
@@ -1303,7 +1303,7 @@ jobs:
           #   --nocheck
           # su \
           #   -c \
-          #     "cd '$(pwd)' && makepkg -v -w '/home/user/sequoia-sq-build' -- -df --nocheck" - \
+          #     "cd '$(pwd)' && makepkg -df --nocheck" - \
           #   "user"
       # - name: CI-Build
       #   run: |
