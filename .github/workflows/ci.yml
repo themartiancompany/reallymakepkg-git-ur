@@ -1240,16 +1240,6 @@ jobs:
         shell:
           msys2 {0}
     steps:
-      - name:
-          Fixes CRLF on Windows.
-        run: |
-          git \
-            config \
-              --global \
-                "core.autocrlf" \
-                "input"
-      - uses:
-          actions/checkout@v3
       - uses:
           msys2/setup-msys2@v2
         with:
@@ -1292,6 +1282,16 @@ jobs:
             -Ss \
             --noconfirm \
             cargo
+      - name:
+          Fixes CRLF on Windows.
+        run: |
+          git \
+            config \
+              --global \
+                "core.autocrlf" \
+                "input"
+      - uses:
+          actions/checkout@v3
       - name:
           Builds the package.
         run: |
