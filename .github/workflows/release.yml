@@ -1304,25 +1304,22 @@ jobs:
       - name:
           Installs Crash Bash Library.
         run: |
-          /entrypoint.sh git \
-              clone \
-                --branch="libcrash-bash" \
-                --single-branch \
-                --depth=1 \
-                "https://github.com/themartiancompany/fur" \
-                "${HOME}/fur"
-          /entrypoint.sh \
-            rm \
-              "${HOME}/fur/msys2/any/"*".pkg.tar."*".sig"
-          /entrypoint.sh \
-            pacman \
-              -Udd \
-              --noconfirm \
-              "${HOME}/fur/msys2/any/"*".pkg.tar."*
-          /entrypoint.sh \
-            rm \
-              -rf \
+          git \
+            clone \
+              --branch="libcrash-bash" \
+              --single-branch \
+              --depth=1 \
+              "https://github.com/themartiancompany/fur" \
               "${HOME}/fur"
+          rm \
+            "${HOME}/fur/msys2/any/"*".pkg.tar."*".sig"
+          pacman \
+            -Udd \
+            --noconfirm \
+            "${HOME}/fur/msys2/any/"*".pkg.tar."*
+          rm \
+            -rf \
+            "${HOME}/fur"
       - name:
           Fixes CRLF on Windows.
         run: |
