@@ -1261,6 +1261,8 @@ jobs:
             git
             mingw-w64-${{ matrix.env }}-jq
             mingw-w64-${{ matrix.env }}-gcc
+            mingw-w64-${{ matrix.env }}-gcc
+            python-docutils
       - name:
           Upgrade Arch environment.
         run: |
