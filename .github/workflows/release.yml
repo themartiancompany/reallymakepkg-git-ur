@@ -649,11 +649,6 @@ jobs:
           #       -o \
           #         "${HOME}/reallymakepkg-fur" \
           #       "reallymakepkg"
-          # Installs reallymakepkg with stable fur
-          # /entrypoint.sh \
-          #   pacman -Udd \
-          #     --noconfirm \
-          #     "${HOME}/fur/termux/any/"*".pkg.tar."*
           /entrypoint.sh \
             reallymakepkg \
               -v \
@@ -669,14 +664,22 @@ jobs:
             "$(pwd)" \
             -iname \
               "*.pkg.tar.*"
+      - name:
+          Installs the package.
+        run: |
+          /entrypoint.sh \
+            pacman \
+              -Rdd \
+              --noconfirm \
+              reallymakepkg
           /entrypoint.sh \
             pacman \
               -Udd \
               --noconfirm \
-                $(find \
-                    "$(pwd)" \
-                    -iname \
-                      "*.pkg.tar.*")
+              $(find \
+                  "$(pwd)" \
+                  -iname \
+                    "*.pkg.tar.*")
       - name:
           version
         run: |
