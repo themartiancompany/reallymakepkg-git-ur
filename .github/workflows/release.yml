@@ -205,6 +205,7 @@ jobs:
               install \
                 -y \
                 "git"
+                "jq"
       - name:
           Installs Capnproto.
         run: |
@@ -777,6 +778,7 @@ jobs:
             -S \
             --noconfirm \
             "git" \
+            "jq" \
             "python" \
             "tree"
       - uses:
