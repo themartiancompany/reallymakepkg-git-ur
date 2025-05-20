@@ -55,16 +55,14 @@ jobs:
               ubuntu-24.04-arm
             architecture:
               aarch64
-          # Upstream issue
-          # https://gitlab.com/sequoia-pgp/pgp-cert-d/-/issues/54
-          # - runner:
-          #     ubuntu-24.04
-          #   architecture:
-          #     i686
-          # - runner:
-          #     ubuntu-24.04-arm
-          #   architecture:
-          #     arm
+          - runner:
+              ubuntu-24.04
+            architecture:
+              i686
+          - runner:
+              ubuntu-24.04-arm
+            architecture:
+              arm
           - runner:
               ubuntu-24.04
             architecture:
@@ -659,7 +657,7 @@ jobs:
             reallymakepkg \
               -v \
               -w \
-                "${HOME}/sequoia-sq-build" \
+                "${HOME}/reallymakepkgs-git-build" \
               -- \
               -df \
               --nocheck
@@ -700,9 +698,9 @@ jobs:
             ${{ github.event.release.upload_url }}
             # ${{ steps.create_release.outputs.upload_url }}
           asset_path:
-            sequoia-sq-1.3.1-1-${{ matrix.architecture }}.pkg.tar.xz
+            reallymakepkg-git-${{ steps.version.outputs.version }}-1-${{ matrix.architecture }}.pkg.tar.xz
           asset_name:
-            dogeos-android-sequoia-sq-1.3.1-1-${{ matrix.architecture }}.pkg.tar.xz
+            dogeos-android-reallymakepkg-git-${{ steps.version.outputs.version }}-1-${{ matrix.architecture }}.pkg.tar.xz
           asset_content_type:
             application/gzip
   arch_release:
@@ -711,24 +709,6 @@ jobs:
     strategy:
       matrix:
         include:
-          # - runner:
-          #     ubuntu-24.04-arm
-          #   architecture:
-          #     aarch64
-          #   platform:
-          #     arch
-          #   architecture:
-          #     x86_64
-          # Upstream issue
-          # https://gitlab.com/sequoia-pgp/pgp-cert-d/-/issues/54
-          # - runner:
-          #     ubuntu-24.04
-          #   architecture:
-          #     i686
-          # - runner:
-          #     ubuntu-24.04-arm
-          #   architecture:
-          #     arm
           - runner:
               ubuntu-24.04
             platform:
@@ -1176,13 +1156,6 @@ jobs:
             -R \
             "user:user" \
             "$(pwd)"
-      # - name:
-      #     Gets the actual repo source because somehow it is missing for this container.
-      #   run: |
-      #     su \
-      #       -c \
-      #         "git clone 'https://github.com/themartiancompany/sequoia-sq-ur' '/home/user/lur/sequoia-sq'" - \
-      #       user
       - name:
           Installs build dependencies.
         run: |
@@ -1197,14 +1170,11 @@ jobs:
         run: |
           su \
             -c \
-              "cd $(pwd) && reallymakepkg -v -w '/home/user/sequoia-sq-build' -- -df --nocheck" - \
+              "cd $(pwd) && reallymakepkg -v -w '/home/user/reallymakepkg-git-build' -- -df --nocheck" - \
             "user"
       - name:
           Installs the package.
         run: |
-          # mv \
-          #   "/home/user/lur/sequoia-sq/"*".pkg.tar."* \
-          #   "$(pwd)"
           pacman \
             -Udd \
             --noconfirm \
@@ -1234,20 +1204,11 @@ jobs:
             ${{ github.event.release.upload_url }}
             # ${{ steps.create_release.outputs.upload_url }}
           asset_path:
-            sequoia-sq-1.3.1-1-${{ matrix.architecture }}.pkg.tar.xz
+            reallymakepkg-${{ steps.version.outputs.version }}-1-${{ matrix.architecture }}.pkg.tar.xz
           asset_name:
-            dogeos-gnu-sequoia-sq-1.3.1-1-${{ matrix.architecture }}.pkg.tar.xz
+            dogeos-reallymakepkg-git-${{ steps.version.outputs.version }}-${{ matrix.architecture }}.pkg.tar.xz
           asset_content_type:
             application/gzip
-      # - uses:
-      #     actions/upload-artifact@v4.6.0
-      #   with:
-      #     name:
-      #       artifact-${{ matrix.platform }}-${{ matrix.architecture }}
-      #     path:
-      #       sequoia-sq-1.3.1-1-${{ matrix.architecture }}.pkg.tar.xz
-      # - uses:
-      #     actions/checkout@v4.2.2
   msys2_release:
     name:
       Life and DogeOS Windows base packages (CI).
@@ -1350,6 +1311,26 @@ jobs:
             -df \
             --nocheck
       - name:
+          Installs the package.
+        run: |
+          pacman \
+            -Udd \
+            --noconfirm \
+            $(find \
+                "$(pwd)" \
+                -iname \
+                  "*.pkg.tar.*")
+      - name:
+          version
+        run: |
+          echo \
+            "::set-output name=version::$( \
+            recipe-get \
+              "PKGBUILD" \
+              "pkgver")"
+        id:
+          version
+      - name:
           Upload Windows package.
         uses:
           actions/upload-release-asset@v1
@@ -1361,9 +1342,9 @@ jobs:
             ${{ github.event.release.upload_url }}
             # ${{ steps.create_release.outputs.upload_url }}
           asset_path:
-            reallymakepkg-git-1.2.4-1-${{ matrix.architecture }}.pkg.tar.xz
+            reallymakepkg-git-${{ steps.version.outputs.version }}-1-any.pkg.tar.xz
           asset_name:
-            dogeos-windows-reallymakepkg-git-1.2.4-1-${{ matrix.env }}.pkg.tar.xz
+            dogeos-windows-reallymakepkg-git-${{ steps.version.outputs.version }}-1-any.pkg.tar.xz
           asset_content_type:
             application/gzip
 
