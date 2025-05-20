@@ -1238,7 +1238,7 @@ jobs:
           - { sys:
                 clang64,
               env:
-                clang-x86_64 
+                clang-x86_64,
               arch:
                 x86_64 }
           # - sys:
