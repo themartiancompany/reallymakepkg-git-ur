@@ -55,18 +55,18 @@ jobs:
               ubuntu-24.04-arm
             architecture:
               aarch64
-          - runner:
-              ubuntu-24.04
-            architecture:
-              i686
-          - runner:
-              ubuntu-24.04-arm
-            architecture:
-              arm
-          - runner:
-              ubuntu-24.04
-            architecture:
-              x86_64
+          # - runner:
+          #     ubuntu-24.04
+          #   architecture:
+          #     i686
+          # - runner:
+          #     ubuntu-24.04-arm
+          #   architecture:
+          #     arm
+          # - runner:
+          #     ubuntu-24.04
+          #   architecture:
+          #     x86_64
     runs-on:
       ${{ matrix.runner }}
     # prepare writable volume prefix mount for actions/upload-artifact,
@@ -1230,24 +1230,24 @@ jobs:
                 x86_64,
               arch:
                 x86_64 }
-          - { sys:
-                mingw32,
-              env:
-                i686,
-              arch:
-                i686 }
-          - { sys:
-                ucrt64,
-              env:
-                ucrt-x86_64,
-              arch:
-                x86_64 }
-          - { sys:
-                clang64,
-              env:
-                clang-x86_64,
-              arch:
-                x86_64 }
+          # - { sys:
+          #       mingw32,
+          #     env:
+          #       i686,
+          #     arch:
+          #       i686 }
+          # - { sys:
+          #       ucrt64,
+          #     env:
+          #       ucrt-x86_64,
+          #     arch:
+          #       x86_64 }
+          # - { sys:
+          #       clang64,
+          #     env:
+          #       clang-x86_64,
+          #     arch:
+          #       x86_64 }
     runs-on:
       windows-latest
     defaults:
