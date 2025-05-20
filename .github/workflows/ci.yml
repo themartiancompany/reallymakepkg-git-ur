@@ -1173,12 +1173,13 @@ jobs:
       #       -c \
       #         "git clone 'https://github.com/themartiancompany/sequoia-sq-ur' "$(pwd)/sequoia-sq'" - \
       #       user
-      # - name:
-      #     Installs build dependencies.
-      #   run: |
-      #     pacman \
-      #       -S \
-      #         --noconfirm \
+      - name:
+          Installs build dependencies.
+        run: |
+          pacman \
+            -S \
+              --noconfirm \
+              jq
       #       $(recipe-get \
       #           "PKGBUILD" \
       #           "makedepends")
