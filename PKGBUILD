@@ -44,7 +44,7 @@ _os="$( \
     -o)"
 _pkg=reallymakepkg
 pkgname="${_pkg}-git"
-pkgver="1.2.2".r3.g"7738cf45a0b7c1ad030403900aa77fb51f4d0648"
+pkgver="1.2.2.r4.g4f162e95fb201fbbb234286be990649e41b4183b"
 pkgrel=1
 pkgdesc="System-independent makepkg"
 arch=(
