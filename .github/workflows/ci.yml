@@ -1256,6 +1256,7 @@ jobs:
           update:
             true
           install:
+            base-devel
             dos2unix
             git
             mingw-w64-${{ matrix.env }}-jq
