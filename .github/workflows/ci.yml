@@ -1307,7 +1307,7 @@ jobs:
           #   --nocheck
           # su \
           #   -c \
-          #     "cd '$(pwd)' && reallymakepkg -v -w '/home/user/sequoia-sq-build' -- -df --nocheck" - \
+          #     "cd '$(pwd)' && makepkg -v -w '/home/user/sequoia-sq-build' -- -df --nocheck" - \
           #   "user"
       # - name: CI-Build
       #   run: |
