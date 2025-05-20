@@ -1179,6 +1179,7 @@ jobs:
         run: |
           pacman \
             -Rdd \
+            --noconfirm \
             reallymakepkg
           pacman \
             -Udd \
@@ -1320,6 +1321,7 @@ jobs:
         run: |
           pacman \
             -Rdd \
+            --noconfirm \
             reallymakepkg
           pacman \
             -Udd \
