@@ -1297,7 +1297,7 @@ jobs:
             config \
               --global \
                 "core.autocrlf" \
-                "true"
+                "false"
       - uses:
           actions/checkout@v3
       - name:
