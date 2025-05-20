@@ -1211,7 +1211,7 @@ jobs:
             artifact-${{ matrix.platform }}-${{ matrix.architecture }}
           path:
             sequoia-sq-1.3.1-1-${{ matrix.architecture }}.pkg.tar.xz
-  msys2-ucrt64:
+  msys2:
     name:
       Life and DogeOS Windows base packages (CI).
     strategy:
@@ -1221,18 +1221,32 @@ jobs:
               mingw64
             env:
               x86_64
+            msys:
+              MSYS
+          - sys:
+              mingw64
+            env:
+              x86_64
+            msys:
+              MINGW64
           - sys:
               mingw32
             env:
               i686
+            msys:
+              MINGW32
           - sys:
               ucrt64
             env:
               ucrt-x86_64
+            msys:
+              UCRT64
           - sys:
               clang64
             env:
               clang-x86_64
+            msys:
+              CLANG64
     runs-on:
       windows-latest
     defaults:
@@ -1244,7 +1258,7 @@ jobs:
           msys2/setup-msys2@v2
         with:
           msystem:
-            $${{ matrix.sys }}
+            $${{ matrix.msys }}
           update:
             true
           install:
