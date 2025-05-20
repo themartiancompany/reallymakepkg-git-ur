@@ -1241,7 +1241,7 @@ jobs:
           msys2 {0}
     steps:
       - name:
-        Fixes CRLF on Windows.
+          Fixes CRLF on Windows.
         run: |
           git \
             config \
