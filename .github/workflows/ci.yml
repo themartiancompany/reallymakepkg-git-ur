@@ -357,7 +357,8 @@ jobs:
                 binutils \
                 bsdtar \
                 file \
-                build-essential
+                build-essential \
+                jq
       - name:
           Installs make.
         run: |
