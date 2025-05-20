@@ -1215,7 +1215,7 @@ jobs:
           asset_path:
             reallymakepkg-git-${{ steps.version.outputs.version }}-1-any.pkg.tar.xz
           asset_name:
-            dogeos-reallymakepkg-git-${{ steps.version.outputs.version }}-any.pkg.tar.xz
+            dogeos-gnu-reallymakepkg-git-${{ steps.version.outputs.version }}-any.pkg.tar.xz
           asset_content_type:
             application/gzip
   msys2_release:
