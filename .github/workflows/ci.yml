@@ -1256,6 +1256,7 @@ jobs:
           update:
             true
           install:
+            dos2unix
             git
             mingw-w64-${{ matrix.env }}-gcc
       - name:
@@ -1303,6 +1304,8 @@ jobs:
       - name:
           Builds the package.
         run: |
+          dos2unix \
+            "PKGBUILD"
           makepkg \
             -df \
             --nocheck
