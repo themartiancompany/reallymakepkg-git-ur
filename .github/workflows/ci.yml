@@ -1258,6 +1258,7 @@ jobs:
           install:
             dos2unix
             git
+            jq
             mingw-w64-${{ matrix.env }}-gcc
       - name:
           Upgrade Arch environment.
