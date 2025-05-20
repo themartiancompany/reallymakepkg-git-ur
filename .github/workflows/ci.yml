@@ -646,10 +646,6 @@ jobs:
           TERMUX_VERSION="50" \
           /entrypoint.sh \
             makepkg \
-              -v \
-              -w \
-                "${HOME}/sequoia-sq-build" \
-              -- \
               -df \
               --nocheck
           /entrypoint.sh \
